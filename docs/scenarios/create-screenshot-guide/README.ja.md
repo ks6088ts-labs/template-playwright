@@ -1,0 +1,154 @@
+<!-- translation-meta
+source: docs/scenarios/create-screenshot-guide/README.md
+sourceHash: sha256:c30e25967b64f9b6b34592bdc4570e0d83048bc73fb250281ee9f3646cd47a65
+canonicalLanguage: en
+-->
+
+# Playwright CLI でスクリーンショット手順書を作成する
+
+## 目的
+
+このシナリオでは、コーディングエージェントが平易な言葉によるリクエストを、Playwright CLI
+を使って **初心者にもわかりやすいスクリーンショット付きの GUI マニュアル** に変える方法を
+示します。エージェントは実際のブラウザーを操作し、ステップごとにスクリーンショットを 1 枚
+撮影し、技術者でない読者でも従える Markdown ガイドを書き出します。
+
+対象は公開されている [Swagger UI Petstore](https://petstore.swagger.io/) デモです。作成
+されるガイドは、単一の API オペレーション `GET /pet/findByStatus` を、ページを開くところ
+からサーバーのレスポンスを読み取るところまで一通り扱います。
+
+このリポジトリの他のシナリオとは異なり、このシナリオは成果物の一部として意図的に
+**スクリーンショットをコミット** します。画像そのものがドキュメントです。
+
+## シナリオのファイル
+
+| ファイル | 役割 |
+| --- | --- |
+| [作業指示書](templates/guide-instructions.ja.md) | エージェントにコンテキストとして渡す自然言語の手順。 |
+| [サンプルガイド](sample-guide/petstore-swagger-ui-guide.ja.md) | このシナリオの実際の実行から作成された初心者向けマニュアル。 |
+| `sample-guide/images/` | サンプルガイドから参照される、厳選したスクリーンショット。 |
+
+## コミットされるスクリーンショットについての注記
+
+リポジトリは通常、スクリーンショットやその他の生成されたブラウザー出力を Git の対象外に
+します（[AGENTS.md](../../../AGENTS.md) を参照）。このシナリオは意図的な例外です。
+`sample-guide/images/` 配下のレビュー済みの画像は公開されるドキュメントであり、一時的な
+撮影出力ではありません。Playwright CLI が `.playwright-cli/` 配下に書き出す一時的な
+スナップショットは引き続き無視され、決してコミットされません。
+
+## 前提条件
+
+- Node.js 20 以降と pnpm。
+- `https://petstore.swagger.io/` へのネットワークアクセス。
+- ローカルの Agent Skill を使用し、ターミナルコマンドを実行できるコーディングエージェント。
+- このリポジトリからインストールされた依存関係と Playwright CLI ブラウザー。
+
+すべてのコマンドはリポジトリルートから実行します。
+
+## ステップ 1: プロジェクトローカルの CLI を準備する
+
+リポジトリがロックしているバージョンと管理対象ブラウザーをインストールします:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm run pw:install-browser
+```
+
+環境がまだ用意していない場合は、CLI を確認し、その Agent Skill をインストールします:
+
+```sh
+pnpm exec playwright-cli --version
+pnpm run pw:install-skills
+```
+
+このシナリオは `pnpm exec playwright-cli` を使用するため、グローバルな CLI インストールに
+依存しません。
+
+## ステップ 2: 指示書を確認する
+
+シナリオを実行する前に、[作業指示書](templates/guide-instructions.ja.md) を読みます。指示書
+には、対象サイト、名前付きブラウザーセッション、6 つのウォークスルーの手順、スクリーン
+ショットの命名と保存場所、そして完成したガイドに求められる形が定義されています。
+
+## ステップ 3: エージェントにガイドの作成を依頼する
+
+指示書ファイルをエージェントにコンテキストとして渡します。次のリクエストはリポジトリ
+ルートからそのまま使用できます:
+
+```text
+Use the Playwright CLI Agent Skill to follow the procedure in
+docs/scenarios/create-screenshot-guide/templates/guide-instructions.md.
+
+Capture one screenshot per step into
+docs/scenarios/create-screenshot-guide/sample-guide/images/ and write the
+beginner guide to
+docs/scenarios/create-screenshot-guide/sample-guide/petstore-swagger-ui-guide.md.
+Use the named session create-screenshot-guide, base every caption on observed
+evidence, treat the response body as dynamic, then create the Japanese sibling
+with the translate-markdown-ja skill and close the browser session when finished.
+```
+
+エージェントは、観察・判断・実行のループに従う必要があります。現在のアクセシビリティ
+スナップショットを確認し、ユーザー向けロケーターを選び、1 つのアクションを実行し、その
+ステップを撮影して、次に進みます。各スクリーンショットの前に、対象の要素をビューポートの
+上部に移動させる必要があります。
+
+## ステップ 4: 作成されたガイドを確認する
+
+完成したガイドが次を満たすことを確認します:
+
+1. 短い平易な導入と、スクリーンショットが共有デモのある時点のスナップショットであるという
+   注記で始まっている。
+2. 各アクションに対応する番号付きステップが 1 つずつあり、それぞれに「何をするか」、
+   スクリーンショット、「確認できること」が含まれている。
+3. `sample-guide/images/` 配下に存在する画像のみを参照しており、すべての画像が表示される。
+4. 観察された証拠（実際のリクエスト URL と `200` レスポンス）を反映しており、動的なペットの
+   一覧を固定のものとして提示していない。
+5. 英語のソースに一致する日本語の対応版（`petstore-swagger-ui-guide.ja.md`）がある。
+
+チェックイン済みの [サンプルガイド](sample-guide/petstore-swagger-ui-guide.ja.md) は、期待
+される詳細度を示しています。これはある時点の証拠であり、実際のウェブサイトに関する恒久的な
+主張ではありません。
+
+## 成功基準
+
+- エージェントが自然言語の指示からブラウザーの操作を導き出し、すべてのステップで見やすい
+  スクリーンショットを撮影する。
+- ガイドが技術者でない読者にも理解でき、観察された証拠に裏付けられている。
+- スクリーンショットが `sample-guide/images/` 配下にステップ番号付きの名前で保存され、相対
+  パスで参照されている。
+- 英語のガイドとその日本語の対応版が一致している。
+- 実行後に名前付きブラウザーセッションが閉じられ、生のスナップショット、トレース、ブラウ
+  ザープロファイル、認証情報がシナリオディレクトリに追加されていない。
+
+## トラブルシューティング
+
+### CLI またはブラウザーが利用できない
+
+`pnpm install --frozen-lockfile` を実行し、続けて `pnpm run pw:install-browser` を実行し
+ます。開始する前に `pnpm exec playwright-cli --version` が成功することを確認します。
+
+### 名前付きセッションがすでに開いている
+
+このシナリオで使用するセッションだけを閉じ、もう一度開始します:
+
+```sh
+pnpm exec playwright-cli -s=create-screenshot-guide close
+```
+
+### Cookie バナーがページを覆う
+
+スクリーンショットに写り込まないように、撮影前に、例えば **Allow all cookies** を実行して
+閉じます。
+
+### ロケーターが一致しなくなった
+
+新しいアクセシビリティスナップショットを取得し、現在のロールとアクセシブルネームでコント
+ロールを特定します。`status` フィルターは複数選択リスト（`getByRole('listbox')`）です。
+ページには別の「Response content type」セレクトもあるため、目的のコントロールにロケーター
+を絞り込みます。
+
+### 実際のウェブサイトまたはネットワークが利用できない
+
+環境要因のブロッカーとして報告し、作業を止めます。スクリーンショットやレスポンスをでっち
+上げないでください。それでも名前付きブラウザーセッションを閉じるよう試みます。

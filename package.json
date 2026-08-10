@@ -1,0 +1,25 @@
+{
+  "name": "template-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "docs:i18n:status": "node .agents/skills/translate-markdown-ja/scripts/markdown-translations.mjs status",
+    "docs:i18n:check": "node .agents/skills/translate-markdown-ja/scripts/markdown-translations.mjs check",
+    "pw": "playwright-cli",
+    "pw:help": "playwright-cli --help",
+    "pw:install-browser": "playwright-cli install-browser",
+    "pw:install-skills": "playwright-cli install --skills=agents",
+    "test:headed": "playwright test --headed",
+    "test:docs-i18n": "node --test .agents/skills/translate-markdown-ja/scripts/markdown-translations.test.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/cli": "0.1.17",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2"
+  }
+}
