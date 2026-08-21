@@ -1,6 +1,6 @@
 <!-- translation-meta
 source: docs/scenarios/automate-manual-testing/templates/work-instructions.md
-sourceHash: sha256:d51bac5aa6ffbe1388a3669e34f64182ee668c42e0fd3ba420c26ab8c8378be2
+sourceHash: sha256:5f4ed0ed1c3ea87db2fbf2643766e3fa634dfda3bac41c4d8018876a888f0a40
 canonicalLanguage: en
 -->
 
@@ -20,8 +20,15 @@ Playwright CLI を使用して [playwright.dev](https://playwright.dev/)
   インストール済みの Playwright CLI Agent Skill に従います。
 - すべてのブラウザーコマンドで、名前付きブラウザーセッション
   `automate-manual-testing` を使用します。
-- CLI が管理する新しいブラウザーを使用します。個人用ブラウザーにアタッチしたり、
-  永続プロファイル、保存済み状態、Cookie、認証情報を使用したりしないでください。
+- `pnpm exec playwright-cli -s=automate-manual-testing open https://playwright.dev/ --headed`
+  を使用して、CLI が管理する新しい表示可能なブラウザーを開きます。`--headed` オプションは
+  必須です。これらのチェックを headless モードで実行しないでください。
+- ブラウザーを開いた直後に `pnpm exec playwright-cli list` を実行し、
+  `automate-manual-testing` に `headed: true` と表示されることを確認します。表示されない場合は
+  そのセッションを閉じ、そのセッションのエビデンスを破棄して、チェックを実行する前に
+  `--headed` を指定して再起動します。
+- 個人用ブラウザーにアタッチしたり、永続プロファイル、保存済み状態、Cookie、認証情報を
+  使用したりしないでください。
 - アクセシビリティスナップショットと、ロールおよびアクセシブル名に基づく
   ユーザー向けロケーターを優先します。CSS セレクターや XPath は使用しないでください。
 - ナビゲーション後またはページ状態が大きく変化した後は、新しいスナップショットを

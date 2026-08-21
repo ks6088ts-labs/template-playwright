@@ -1,6 +1,6 @@
 <!-- translation-meta
 source: docs/scenarios/automate-manual-testing/sample-work-report.md
-sourceHash: sha256:00f7e091a321359c622a74e848cc8916c356b7b5611eacda73b1650cce821c26
+sourceHash: sha256:1a760066be2d35270e434df5ae67c5cc0afb745879fd434422e2b38bd224c473
 canonicalLanguage: en
 -->
 
@@ -10,11 +10,11 @@ canonicalLanguage: en
 
 | 項目 | 値 |
 | --- | --- |
-| 開始日時（タイムゾーンを含む） | 2026-08-08 16:49:42 JST (UTC+09:00) |
-| 終了日時（タイムゾーンを含む） | 2026-08-08 16:51:32 JST (UTC+09:00) |
+| 開始日時（タイムゾーンを含む） | 2026-08-21 14:49:09 JST (UTC+0900) |
+| 終了日時（タイムゾーンを含む） | 2026-08-21 14:52:31 JST (UTC+0900) |
 | 実行者 | GitHub Copilot in VS Code |
 | 対象 URL | `https://playwright.dev/` |
-| ブラウザー | CLI-managed Headless Chrome 151.0.0.0 |
+| ブラウザー | CLI-managed headed Chrome 151.0.7922.173 (`headed: true`) |
 | Playwright CLI バージョン | `0.1.17` |
 | セッション名 | `automate-manual-testing` |
 | 作業手順 | `docs/scenarios/automate-manual-testing/templates/work-instructions.md` |
@@ -33,11 +33,11 @@ canonicalLanguage: en
 
 | ID | チェック | ステータス | 簡潔なエビデンス |
 | --- | --- | --- | --- |
-| MT-01 | ホームページの識別情報 | PASS | URL `https://playwright.dev/`; title contained `Playwright`; expected H1 was visible. |
-| MT-02 | 製品ラインアップ | PASS | Headings `Playwright Test`, `Playwright CLI`, and `Playwright MCP` were visible. |
-| MT-03 | Get started のナビゲーション | PASS | `Get started` opened `/docs/intro`; H1 was `Installation`. |
-| MT-04 | pnpm のインストール手順 | PASS | The intended `pnpm` tab reported `aria-selected=true`; command was `pnpm create playwright`. |
-| MT-05 | 次のドキュメントページ | PASS | Next-page navigation opened `/docs/writing-tests`; expected H1 and introduction were visible. |
+| MT-01 | ホームページの識別情報 | PASS | URL は `https://playwright.dev/`、タイトルには `Playwright` が含まれ、期待するレベル 1 見出しが表示されました。 |
+| MT-02 | 製品ラインアップ | PASS | 見出しの完全一致ロケーターで、表示中の `Playwright Test`、`Playwright CLI`、`Playwright MCP` がそれぞれ 1 件見つかりました。 |
+| MT-03 | Get started のナビゲーション | PASS | `Get started` から `/docs/intro` が開き、レベル 1 見出しは `Installation` でした。 |
+| MT-04 | pnpm のインストール手順 | PASS | セクション内の `pnpm` タブは active かつ selected で、コマンドは `pnpm create playwright` でした。 |
+| MT-05 | 次のドキュメントページ | PASS | `Next Writing tests »` から `/docs/writing-tests` が開き、期待する見出しと導入文が表示されました。 |
 
 ## 詳細結果
 
@@ -47,8 +47,8 @@ canonicalLanguage: en
   `Playwright` が含まれ、レベル1の見出しが
   `Playwright enables reliable web automation` で始まります。
 - **ステータス:** PASS
-- **実際の結果:** The homepage loaded at the normalized URL with the expected title
-  and main heading.
+- **実際の結果:** headed ブラウザーでホームページが正規化 URL に読み込まれ、
+  期待するタイトルとレベル 1 見出しが表示されました。
 - **エビデンス:** URL: `https://playwright.dev/`; title:
   `Fast and reliable end-to-end testing for modern web apps | Playwright`; H1:
   `Playwright enables reliable web automation for testing, scripting, and AI agents.`
@@ -58,27 +58,30 @@ canonicalLanguage: en
 - **期待結果:** `Playwright Test`、`Playwright CLI`、`Playwright MCP` がすべて
   製品見出しとして表示されます。
 - **ステータス:** PASS
-- **実際の結果:** All three product headings were present on the homepage.
-- **エビデンス:** Role-based heading locators returned `Playwright Test`,
-  `Playwright CLI`, and `Playwright MCP`.
+- **実際の結果:** 3 つの製品見出しがすべてホームページに表示されていました。
+- **エビデンス:** 見出しの完全一致ロケーターは `Playwright Test`、
+  `Playwright CLI`、`Playwright MCP` のそれぞれについて `count: 1` と
+  `visible: true` を返しました。
 
 ### MT-03: Get started のナビゲーション
 
 - **期待結果:** `Get started` を操作すると、レベル1の見出しが
   `Installation` の `https://playwright.dev/docs/intro` が開きます。
 - **ステータス:** PASS
-- **実際の結果:** The link navigated to the expected first-party documentation page.
-- **エビデンス:** URL: `https://playwright.dev/docs/intro`; H1: `Installation`.
+- **実際の結果:** アクセシブルな `Get started` リンクを操作すると、期待する
+  公式ドキュメントページへ移動しました。
+- **エビデンス:** 遷移先 URL: `https://playwright.dev/docs/intro`、レベル 1
+  見出し: `Installation`。
 
 ### MT-04: pnpm のインストール手順
 
 - **期待結果:** `Installing Playwright` セクションの `pnpm` タブが選択され、
   表示されるインストールコマンドが `pnpm create playwright` で始まります。
 - **ステータス:** PASS
-- **実際の結果:** The `pnpm` tab in the first package-manager tab list was selected
-  and its panel displayed the pnpm command.
-- **エビデンス:** Tab name: `pnpm`; `aria-selected`: `true`; visible command:
-  `pnpm create playwright`.
+- **実際の結果:** `Installing Playwright` セクション内で特定した `pnpm` タブは
+  active かつ selected になり、そのパネルに pnpm コマンドが表示されました。
+- **エビデンス:** クリック後のアクセシビリティ状態: `pnpm` タブは `[active]
+  [selected]`; visible command in the same tab panel: `pnpm create playwright`。
 
 ### MT-05: 次のドキュメントページ
 
@@ -86,18 +89,23 @@ canonicalLanguage: en
   `Writing tests` の `https://playwright.dev/docs/writing-tests` が開き、
   アクションの実行と期待値に対する状態のアサートについての導入文が表示されます。
 - **ステータス:** PASS
-- **実際の結果:** The `Next Writing tests` link in the `Docs pages` navigation opened
-  the expected page and content.
-- **エビデンス:** URL: `https://playwright.dev/docs/writing-tests`; H1:
-  `Writing tests`; introduction: `Playwright tests are simple: they perform
-  actions and assert the state against expectations.`
+- **実際の結果:** `Docs pages` ナビゲーションの `Next Writing tests` リンクから、
+  期待するページと内容が開きました。
+- **エビデンス:** 遷移先 URL: `https://playwright.dev/docs/writing-tests`、
+  レベル 1 見出し: `Writing tests`、導入文全文:
+  `Playwright tests are simple: they perform actions and assert the state against expectations.`
 
 ## 所見
 
-ライブサイトに対する5つのチェックはすべてパスしました。報告対象となる正常な実行に、
-ユーザーから見えるサイトの変化や環境上のブロッカーは影響しませんでした。この結果は
-上記の実行時点におけるサイトの状態を示すものであり、恒久的な可用性を保証するものでは
-ありません。
+この実行の開始時点で、`playwright-cli list` は `(no browsers)` を返しました。その後、
+新しい `automate-manual-testing` セッションを `--headed` で開き、直後に実行した
+`playwright-cli list` で、チェック開始前に `browser-type: chrome`、インメモリ
+プロファイル、`headed: true` が報告されました。最初の 2 つのテキスト検索プローブは、
+正規表現または部分文字列の境界がアクセシビリティスナップショットの構造と一致しなかった
+ため、該当なしとなりました。その後、見出しの完全一致ロケーターと現在の段落参照によって
+必要な内容を確実に観測できたため、失敗またはブロックとなったチェックはありませんでした。
+ユーザーから見えるサイトの変化や環境上のブロッカーはなく、5 つのチェックはすべて
+パスしました。この結果は上記の実行時点におけるサイトの状態のみを示します。
 
 ## クリーンアップ
 
@@ -105,4 +113,4 @@ canonicalLanguage: en
 | --- | --- |
 | セッション終了ステータス | PASS: `Browser 'automate-manual-testing' closed` |
 | 残っているブラウザーセッション | None: `playwright-cli list` returned `(no browsers)` |
-| 備考 | No screenshots, traces, persistent profiles, or saved browser state were created. |
+| 備考 | `.playwright-cli/` 配下の一時的なアクセシビリティスナップショットだけが作成され、スクリーンショット、トレース、永続プロファイル、保存済みブラウザー状態は作成されませんでした。 |

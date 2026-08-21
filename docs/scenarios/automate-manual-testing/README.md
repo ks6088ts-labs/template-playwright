@@ -3,8 +3,8 @@
 ## Purpose
 
 This minimal scenario demonstrates how a coding agent can turn a natural-language
-manual test procedure into browser actions, verify a public website with
-Playwright CLI, and submit a structured Markdown work report.
+manual test procedure into visible browser actions, verify a public website with
+Playwright CLI in headed mode, and submit a structured Markdown work report.
 
 The target is [playwright.dev](https://playwright.dev/). The scenario uses five
 read-only checks that cover page identity, visible content, link navigation, a
@@ -29,6 +29,7 @@ directory is not part of the submitted report.
 
 - Node.js 20 or newer and pnpm.
 - Network access to `https://playwright.dev/`.
+- A graphical desktop session where the CLI-managed browser can remain visible.
 - A coding agent that can use local Agent Skills and run terminal commands.
 - Dependencies and the Playwright CLI browser installed from this repository.
 
@@ -70,17 +71,21 @@ to use from the repository root:
 > Use the Playwright CLI Agent Skill to execute the procedure in
 > docs/scenarios/automate-manual-testing/templates/work-instructions.md.
 >
+> Start the named CLI-managed browser with `--headed`, verify that
+> `pnpm exec playwright-cli list` reports `headed: true` before performing any
+> check, and do not use evidence from a headless session.
+>
 > Use docs/scenarios/automate-manual-testing/templates/work-report.md as an immutable
 > template and write the filled result to
 > docs/scenarios/automate-manual-testing/sample-work-report.md. Base every result on
 > observed Playwright CLI evidence, preserve real failures or blockers, fill every
 > placeholder, and close the named browser session when finished.
 
-The agent should follow an observe-decide-act-report loop: inspect the current
-accessibility snapshot, choose a user-facing locator, perform one action, inspect
-the resulting state, and retain only concise evidence for the report. Temporary
-element references must not be reused after navigation or a material page-state
-change.
+The agent should keep the CLI-managed browser visible throughout the checks and
+follow an observe-decide-act-report loop: inspect the current accessibility
+snapshot, choose a user-facing locator, perform one action, inspect the resulting
+state, and retain only concise evidence for the report. Temporary element
+references must not be reused after navigation or a material page-state change.
 
 ## Step 4: Review the submitted report
 
@@ -93,6 +98,8 @@ Confirm that the completed report:
 5. Has no `{{FILL_ME}}` placeholders left.
 6. Records successful closure of the `automate-manual-testing` session, or
    explains why cleanup was blocked.
+7. Identifies the browser as headed and records that the session reported
+  `headed: true` before the checks began.
 
 The checked-in [sample work report](sample-work-report.md) shows the expected
 level of detail. It is evidence from one point in time, not a permanent claim
@@ -103,6 +110,8 @@ about the live website.
 - The agent derives browser actions from the natural-language instructions.
 - All five checks receive a conclusive and evidence-backed status, unless the
   report clearly identifies an environmental blocker.
+- The CLI-managed browser is launched with `--headed`, remains visible during
+  the checks, and reports `headed: true` before its evidence is accepted.
 - The work report template remains unchanged and the filled report is a separate
   Markdown file.
 - The named browser session is closed after execution.
@@ -123,6 +132,19 @@ Close only the session used by this scenario, then restart the procedure:
 ```sh
 pnpm exec playwright-cli -s=automate-manual-testing close
 ```
+
+### The browser opens in headless mode
+
+Close the session, discard evidence from it, and reopen it explicitly in headed
+mode before starting the checks:
+
+```sh
+pnpm exec playwright-cli -s=automate-manual-testing close
+pnpm exec playwright-cli -s=automate-manual-testing open https://playwright.dev/ --headed
+pnpm exec playwright-cli list
+```
+
+Continue only when the session listing reports `headed: true`.
 
 ### A locator no longer matches
 

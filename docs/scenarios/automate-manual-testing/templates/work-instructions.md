@@ -13,8 +13,15 @@ template. This is a read-only test of public, first-party Playwright pages.
   installed Playwright CLI Agent Skill.
 - Use the named browser session `automate-manual-testing` for every browser
   command.
-- Use a fresh, CLI-managed browser. Do not attach to a personal browser or use a
-  persistent profile, saved state, cookies, or credentials.
+- Open a fresh, CLI-managed visible browser with
+  `pnpm exec playwright-cli -s=automate-manual-testing open https://playwright.dev/ --headed`.
+  The `--headed` option is required; do not run these checks in headless mode.
+- Immediately after opening the browser, run `pnpm exec playwright-cli list`
+  and confirm that `automate-manual-testing` reports `headed: true`. If it does
+  not, close that session, discard evidence from it, and restart with
+  `--headed` before performing any check.
+- Do not attach to a personal browser or use a persistent profile, saved state,
+  cookies, or credentials.
 - Prefer accessibility snapshots and user-facing locators based on role and
   accessible name. Do not use CSS selectors or XPath.
 - Take a fresh snapshot after navigation or a material page-state change. Do not
