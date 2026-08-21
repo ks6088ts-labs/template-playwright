@@ -1,6 +1,6 @@
 <!-- translation-meta
 source: docs/scenarios/attach-authenticated-local-chrome/README.md
-sourceHash: sha256:564afad56ae81b5104ee99443ab41368495a391c39af580f2d39b48b9773febc
+sourceHash: sha256:8ee1f6e68788827455ea92643cd5538c3760c02019433de3f59bd396dbad8c49
 canonicalLanguage: en
 -->
 
@@ -154,18 +154,15 @@ Skill 自体がブラウザーへのアクセスを許可するわけではあ�
 同じリクエスト内で、Skill を明示的に使用し、安全上の制約を示すようエージェントに依頼します。
 例を次に示します。
 
-```text
-Use the Playwright CLI Agent Skills to attach to the existing Google Chrome
-session with the name `calendar-local`. Open today's day view in Google
-Calendar in a new tab and inspect the schedule without making any changes.
-
-Before including event titles, dates, times, calendar names, accounts,
-attendees, locations, descriptions, or URLs in your response, replace them with
-fictional values or `[REDACTED]`. Do not display or save cookies or storage
-state, do not close any existing tabs, and detach without closing Chrome when
-finished. If login, 2FA, CAPTCHA, or Chrome connection permission is required,
-pause so that I can handle it in the browser.
-```
+> Playwright CLI Agent Skills を使用して、既存の Google Chrome セッション `calendar-local` に
+> アタッチしてください。新しいタブで Google Calendar の本日の日ビューを開き、何も変更せずに
+> スケジュールを確認してください。
+>
+> レスポンスにイベントのタイトル、日付、時刻、カレンダー名、アカウント、参加者、場所、説明、
+> URL を含める前に、架空の値または `[REDACTED]` に置き換えてください。Cookie やストレージ状態を
+> 表示または保存せず、既存のタブを閉じず、完了時には Chrome を閉じずにデタッチしてください。
+> ログイン、2FA、CAPTCHA、または Chrome の接続許可が必要な場合は、ブラウザーで私が対応できる
+> よう一時停止してください。
 
 適切に動作するエージェントは、Skill を手順のガイダンスとして使用し、バージョン固有の詳細が
 不明な場合はローカル CLI のヘルプを確認し、認証とブラウザーの同意について人間の関与を

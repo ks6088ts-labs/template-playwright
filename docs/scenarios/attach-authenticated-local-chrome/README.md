@@ -134,18 +134,16 @@ itself. Chrome still requires the explicit attachment performed later.
 Ask the agent to use the Skill explicitly and state the safety constraints in
 the same request. For example:
 
-```text
-Use the Playwright CLI Agent Skills to attach to the existing Google Chrome
-session with the name `calendar-local`. Open today's day view in Google
-Calendar in a new tab and inspect the schedule without making any changes.
-
-Before including event titles, dates, times, calendar names, accounts,
-attendees, locations, descriptions, or URLs in your response, replace them with
-fictional values or `[REDACTED]`. Do not display or save cookies or storage
-state, do not close any existing tabs, and detach without closing Chrome when
-finished. If login, 2FA, CAPTCHA, or Chrome connection permission is required,
-pause so that I can handle it in the browser.
-```
+> Use the Playwright CLI Agent Skills to attach to the existing Google Chrome
+> session with the name `calendar-local`. Open today's day view in Google
+> Calendar in a new tab and inspect the schedule without making any changes.
+>
+> Before including event titles, dates, times, calendar names, accounts,
+> attendees, locations, descriptions, or URLs in your response, replace them with
+> fictional values or `[REDACTED]`. Do not display or save cookies or storage
+> state, do not close any existing tabs, and detach without closing Chrome when
+> finished. If login, 2FA, CAPTCHA, or Chrome connection permission is required,
+> pause so that I can handle it in the browser.
 
 A well-behaved agent should use the Skill as procedural guidance, inspect the
 local CLI help when a version-specific detail is uncertain, and keep the human

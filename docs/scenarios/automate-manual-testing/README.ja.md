@@ -1,6 +1,6 @@
 <!-- translation-meta
 source: docs/scenarios/automate-manual-testing/README.md
-sourceHash: sha256:677a15723c588b6040212b5d3d1a50656d122f5b308e8c4b7774e27cfce79d00
+sourceHash: sha256:f45cf290b5e5a1fb28b2dbfafd3a9bb83ff2175de225135d4b35e78225ce4b61
 canonicalLanguage: en
 -->
 
@@ -57,16 +57,15 @@ pnpm run pw:install-skills
 
 両方の Markdown ファイルをコンテキストとしてエージェントに渡します。次のリクエストはリポジトリルートからそのまま使用できます。
 
-```text
-Use the Playwright CLI Agent Skill to execute the procedure in
-docs/scenarios/automate-manual-testing/templates/work-instructions.md.
-
-Use docs/scenarios/automate-manual-testing/templates/work-report.md as an immutable
-template and write the filled result to
-docs/scenarios/automate-manual-testing/sample-work-report.md. Base every result on
-observed Playwright CLI evidence, preserve real failures or blockers, fill every
-placeholder, and close the named browser session when finished.
-```
+> Playwright CLI Agent Skill を使用して、
+> docs/scenarios/automate-manual-testing/templates/work-instructions.md に記載された手順を
+> 実行してください。
+>
+> docs/scenarios/automate-manual-testing/templates/work-report.md を変更不可のテンプレートとして
+> 使用し、記入済みの結果を
+> docs/scenarios/automate-manual-testing/sample-work-report.md に書き込んでください。すべての結果は
+> 観測した Playwright CLI の証跡に基づけ、実際の失敗やブロッカーをそのまま残し、すべての
+> プレースホルダーを埋め、完了時に指定されたブラウザーセッションを閉じてください。
 
 エージェントは observe-decide-act-report ループに従う必要があります。現在のアクセシビリティスナップショットを調べ、ユーザー向けのロケーターを選択し、1 つの操作を実行して、結果の状態を確認し、レポートには簡潔な証跡だけを残します。一時的な要素参照は、ナビゲーションまたはページ状態の実質的な変更後に再利用してはいけません。
 

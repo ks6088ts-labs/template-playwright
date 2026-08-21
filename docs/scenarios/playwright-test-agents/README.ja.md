@@ -1,6 +1,6 @@
 <!-- translation-meta
 source: docs/scenarios/playwright-test-agents/README.md
-sourceHash: sha256:0cf372dccadaa443390112dc1bb4e784ffe28bb1a2cef9826bc9df6b66f2e94d
+sourceHash: sha256:5f1489e50efd30a1fc852e885c0c8cf4c8d9c357d90e90706cb85a30e1572e1f
 canonicalLanguage: en
 -->
 
@@ -172,13 +172,12 @@ VS Code Chat で次のように操作します。
 3. そのファイルが prompt context に表示されていることを確認します。
 4. 次のプロンプトを送信します。
 
-```text
-Explore https://playwright.dev/ and create a test plan for its basic user-facing
-operations. Cover the homepage, primary navigation, search, color theme,
-documentation navigation, and footer. Use tests/seed.spec.ts as the seed test.
-Keep every scenario independent, use observable outcomes, and save the plan to
-specs/playwright-website-basic-operations.plan.md.
-```
+> <https://playwright.dev/> を調査し、基本的なユーザー向け操作のテスト計画を作成してください。
+> ホームページ、プライマリナビゲーション、検索、カラーテーマ、ドキュメント内のナビゲーション、
+> フッターを対象にしてください。
+> tests/seed.spec.ts をシードテストとして使用してください。
+> 各シナリオを独立させ、観測可能な結果を使用し、計画を
+> specs/playwright-website-basic-operations.plan.md に保存してください。
 
 planner は page を初期化し、実際のサイトを探索して、Markdown の計画を保存します。ブラウザーの
 探索には数分かかることがあります。各 tool call が完了するまで待ち、続行前に要求された tool
@@ -209,12 +208,10 @@ Markdown ファイルが存在するという理由だけで続行しないで�
    file context として追加します。
 3. 次のプロンプトを送信します。
 
-```text
-Generate only scenario 1.1, "Homepage loads with hero content", from
-specs/playwright-website-basic-operations.plan.md. Use tests/seed.spec.ts as the
-seed. Verify every step against the live page and write the test to
-tests/homepage/hero-content.spec.ts. Do not generate the other scenarios.
-```
+> specs/playwright-website-basic-operations.plan.md のシナリオ 1.1
+> "Homepage loads with hero content" だけを生成してください。
+> tests/seed.spec.ts をシードとして使用してください。実際のページで各ステップを検証し、テストを
+> tests/homepage/hero-content.spec.ts に書き込んでください。ほかのシナリオは生成しないでください。
 
 generator はテストを作成する前に、計画された操作を実際のページに対して実行します。agent 定義では、
 1 ファイルにつき 1 テスト、計画の group と一致する `describe` block、scenario title と一致する
@@ -288,12 +285,10 @@ VS Code Chat で次のように操作します。
 2. 失敗している `tests/homepage/hero-content.spec.ts` を file context として追加します。
 3. 次のプロンプトを送信します。
 
-```text
-Run and heal the failing test in tests/homepage/hero-content.spec.ts. Diagnose
-the failure against the current https://playwright.dev/ page, make the smallest
-robust correction, and rerun the repaired test. Do not change unrelated tests or
-weaken the scenario's expected behavior.
-```
+> tests/homepage/hero-content.spec.ts の失敗しているテストを実行して修復してください。現在の
+> <https://playwright.dev/> ページに照らして失敗を診断し、堅牢性を保てる最小限の修正を加え、
+> 修復したテストを再実行してください。無関係なテストを変更したり、シナリオで期待される動作を
+> 弱めたりしないでください。
 
 healer は失敗を再現して現在の UI を調査し、実際の `Get started` link に対する user-facing
 locator を復元して、テストを再実行するはずです。変更を受け入れる前に編集内容をレビューします。

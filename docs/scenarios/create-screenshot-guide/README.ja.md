@@ -1,6 +1,6 @@
 <!-- translation-meta
 source: docs/scenarios/create-screenshot-guide/README.md
-sourceHash: sha256:c30e25967b64f9b6b34592bdc4570e0d83048bc73fb250281ee9f3646cd47a65
+sourceHash: sha256:30ab452218120a734c2b1a6ab89ad42d89ebcc63a41fb3bf921599fea759cbb8
 canonicalLanguage: en
 -->
 
@@ -75,18 +75,16 @@ pnpm run pw:install-skills
 指示書ファイルをエージェントにコンテキストとして渡します。次のリクエストはリポジトリ
 ルートからそのまま使用できます:
 
-```text
-Use the Playwright CLI Agent Skill to follow the procedure in
-docs/scenarios/create-screenshot-guide/templates/guide-instructions.md.
-
-Capture one screenshot per step into
-docs/scenarios/create-screenshot-guide/sample-guide/images/ and write the
-beginner guide to
-docs/scenarios/create-screenshot-guide/sample-guide/petstore-swagger-ui-guide.md.
-Use the named session create-screenshot-guide, base every caption on observed
-evidence, treat the response body as dynamic, then create the Japanese sibling
-with the translate-markdown-ja skill and close the browser session when finished.
-```
+> Playwright CLI Agent Skill を使用して、
+> docs/scenarios/create-screenshot-guide/templates/guide-instructions.md に記載された手順に
+> 従ってください。
+>
+> 各ステップにつき 1 枚のスクリーンショットを
+> docs/scenarios/create-screenshot-guide/sample-guide/images/ に保存し、初心者向けガイドを
+> docs/scenarios/create-screenshot-guide/sample-guide/petstore-swagger-ui-guide.md に書き込んでください。
+> 指定された create-screenshot-guide セッションを使用し、すべてのキャプションを観測した証跡に
+> 基づけ、レスポンス本文を動的なものとして扱ってください。その後、translate-markdown-ja skill で
+> 日本語版を作成し、完了時にブラウザーセッションを閉じてください。
 
 エージェントは、観察・判断・実行のループに従う必要があります。現在のアクセシビリティ
 スナップショットを確認し、ユーザー向けロケーターを選び、1 つのアクションを実行し、その

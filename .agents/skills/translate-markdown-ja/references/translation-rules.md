@@ -57,6 +57,24 @@ contract or evidence represented by the document.
   procedure should continue to name the canonical English template path unless
   the requester explicitly asks to execute the Japanese derivative.
 
+## Prompt Examples
+
+Keep user-facing prompt examples in the language of the document so readers can
+copy and submit them directly.
+
+- Present a copyable natural-language prompt to Copilot, a coding agent, or
+  another interactive agent as a Markdown blockquote. Do not put it in a fenced
+  code block, because fenced code blocks are preserved exactly.
+- Keep the prompt in English in the canonical English document. Translate the
+  complete request into natural, copy-ready Japanese in the Japanese sibling.
+- Preserve every protected literal inside the prompt, including URLs, inline
+  code, paths, commands, options, identifiers, placeholders, bracketed tokens,
+  and quoted literal UI labels or scenario titles.
+- Keep canonical English procedure and template paths when a localized prompt
+  instructs an agent to execute those source files.
+- Line wrapping may follow the target language, but the request's requirements,
+  constraints, and degree of certainty must not change.
+
 ## Links And Anchors
 
 For a relative Markdown link in Japanese prose:
@@ -112,6 +130,8 @@ canonical document changes.
 - Compare every heading, paragraph, list item, table row, and blockquote with the
   English source.
 - Confirm protected literals and recorded evidence remain exact.
+- Confirm English prompt examples remain English and Japanese prompt examples
+  read naturally in Japanese.
 - Confirm Japanese Markdown links target available Japanese siblings and all
   fragments still resolve.
 - Run the per-file checker before moving on, then run the full checker after a

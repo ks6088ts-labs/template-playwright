@@ -172,13 +172,11 @@ In VS Code Chat:
 3. Confirm that the file appears in the prompt context.
 4. Submit this prompt:
 
-```text
-Explore https://playwright.dev/ and create a test plan for its basic user-facing
-operations. Cover the homepage, primary navigation, search, color theme,
-documentation navigation, and footer. Use tests/seed.spec.ts as the seed test.
-Keep every scenario independent, use observable outcomes, and save the plan to
-specs/playwright-website-basic-operations.plan.md.
-```
+> Explore <https://playwright.dev/> and create a test plan for its basic user-facing
+> operations. Cover the homepage, primary navigation, search, color theme,
+> documentation navigation, and footer. Use tests/seed.spec.ts as the seed test.
+> Keep every scenario independent, use observable outcomes, and save the plan to
+> specs/playwright-website-basic-operations.plan.md.
 
 The planner should initialize its page, explore the live site, and save a
 Markdown plan. Browser exploration can take several minutes. Allow each tool
@@ -211,12 +209,10 @@ Generate only scenario 1.1 so that the output remains easy to inspect:
    `tests/seed.spec.ts` as file context.
 3. Submit this prompt:
 
-```text
-Generate only scenario 1.1, "Homepage loads with hero content", from
-specs/playwright-website-basic-operations.plan.md. Use tests/seed.spec.ts as the
-seed. Verify every step against the live page and write the test to
-tests/homepage/hero-content.spec.ts. Do not generate the other scenarios.
-```
+> Generate only scenario 1.1, "Homepage loads with hero content", from
+> specs/playwright-website-basic-operations.plan.md. Use tests/seed.spec.ts as the
+> seed. Verify every step against the live page and write the test to
+> tests/homepage/hero-content.spec.ts. Do not generate the other scenarios.
 
 The generator performs the planned actions against the live page before writing
 the test. The agent definition requires one test per file, a `describe` block
@@ -292,12 +288,10 @@ In VS Code Chat:
 2. Add the failing `tests/homepage/hero-content.spec.ts` as file context.
 3. Submit this prompt:
 
-```text
-Run and heal the failing test in tests/homepage/hero-content.spec.ts. Diagnose
-the failure against the current https://playwright.dev/ page, make the smallest
-robust correction, and rerun the repaired test. Do not change unrelated tests or
-weaken the scenario's expected behavior.
-```
+> Run and heal the failing test in tests/homepage/hero-content.spec.ts. Diagnose
+> the failure against the current <https://playwright.dev/> page, make the smallest
+> robust correction, and rerun the repaired test. Do not change unrelated tests or
+> weaken the scenario's expected behavior.
 
 The healer should reproduce the failure, inspect the current UI, restore a
 user-facing locator for the real `Get started` link, and rerun the test. Review

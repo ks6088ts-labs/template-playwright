@@ -1,6 +1,6 @@
 ---
 name: translate-markdown-ja
-description: "Translate canonical English README.md and docs Markdown into Japanese sibling *.ja.md files. Use for Japanese documentation translation, README localization, docs i18n, creating Japanese Markdown, or synchronizing stale Japanese translations while keeping English canonical."
+description: "Translate canonical English README.md and docs Markdown, including user-facing prompt examples, into Japanese sibling *.ja.md files. Use for Japanese documentation translation, README localization, docs i18n, creating Japanese Markdown, or synchronizing stale Japanese translations while keeping English canonical."
 argument-hint: "[README.md, docs/, or specific English Markdown paths; defaults to README.md and docs/]"
 ---
 
@@ -42,12 +42,13 @@ Run every command from the repository root.
      from the English source rather than guessing its provenance.
 4. For a batch, translate linked leaf documents before navigation or index
    documents. Create every requested Japanese sibling before finalizing links.
-5. Translate the prose according to the referenced rules. Preserve the complete
-   Markdown structure and all protected literals. Never edit the English source
-   to make the translation easier.
+5. Translate the prose, including user-facing prompt examples, according to the
+   referenced rules. Preserve the complete Markdown structure and all protected
+   literals. Never edit the English source to make the translation easier.
 6. In Japanese prose, point a relative Markdown link to `*.ja.md` only when that
    Japanese sibling exists or is being created in the same batch. Keep external
-   links, raw paths, commands, and paths inside executable prompts unchanged.
+   links, raw paths, commands, and protected literals inside localized prompts
+   unchanged.
 7. Stamp each completed translation with its English source path and hash:
 
    ```sh
@@ -89,5 +90,7 @@ Run every command from the repository root.
 - Every requested English source has exactly one same-directory `*.ja.md` sibling.
 - All requested pairs report `current` and pass the checker.
 - Japanese prose is natural and faithful, while protected content is unchanged.
+- User-facing prompt examples are English in canonical sources and natural,
+  copy-ready Japanese in Japanese siblings.
 - Links prefer available Japanese siblings and resolve to real files and anchors.
 - The English canonical documents remain unchanged by the translation run.

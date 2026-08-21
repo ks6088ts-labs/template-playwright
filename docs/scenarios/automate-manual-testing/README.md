@@ -67,16 +67,14 @@ the required submission shape.
 Give both Markdown files to the agent as context. The following request is ready
 to use from the repository root:
 
-```text
-Use the Playwright CLI Agent Skill to execute the procedure in
-docs/scenarios/automate-manual-testing/templates/work-instructions.md.
-
-Use docs/scenarios/automate-manual-testing/templates/work-report.md as an immutable
-template and write the filled result to
-docs/scenarios/automate-manual-testing/sample-work-report.md. Base every result on
-observed Playwright CLI evidence, preserve real failures or blockers, fill every
-placeholder, and close the named browser session when finished.
-```
+> Use the Playwright CLI Agent Skill to execute the procedure in
+> docs/scenarios/automate-manual-testing/templates/work-instructions.md.
+>
+> Use docs/scenarios/automate-manual-testing/templates/work-report.md as an immutable
+> template and write the filled result to
+> docs/scenarios/automate-manual-testing/sample-work-report.md. Base every result on
+> observed Playwright CLI evidence, preserve real failures or blockers, fill every
+> placeholder, and close the named browser session when finished.
 
 The agent should follow an observe-decide-act-report loop: inspect the current
 accessibility snapshot, choose a user-facing locator, perform one action, inspect

@@ -71,18 +71,16 @@ shape of the finished guide.
 Give the instructions file to the agent as context. The following request is
 ready to use from the repository root:
 
-```text
-Use the Playwright CLI Agent Skill to follow the procedure in
-docs/scenarios/create-screenshot-guide/templates/guide-instructions.md.
-
-Capture one screenshot per step into
-docs/scenarios/create-screenshot-guide/sample-guide/images/ and write the
-beginner guide to
-docs/scenarios/create-screenshot-guide/sample-guide/petstore-swagger-ui-guide.md.
-Use the named session create-screenshot-guide, base every caption on observed
-evidence, treat the response body as dynamic, then create the Japanese sibling
-with the translate-markdown-ja skill and close the browser session when finished.
-```
+> Use the Playwright CLI Agent Skill to follow the procedure in
+> docs/scenarios/create-screenshot-guide/templates/guide-instructions.md.
+>
+> Capture one screenshot per step into
+> docs/scenarios/create-screenshot-guide/sample-guide/images/ and write the
+> beginner guide to
+> docs/scenarios/create-screenshot-guide/sample-guide/petstore-swagger-ui-guide.md.
+> Use the named session create-screenshot-guide, base every caption on observed
+> evidence, treat the response body as dynamic, then create the Japanese sibling
+> with the translate-markdown-ja skill and close the browser session when finished.
 
 The agent should follow an observe-decide-act loop: inspect the current
 accessibility snapshot, choose a user-facing locator, perform one action, capture
