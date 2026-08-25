@@ -103,6 +103,45 @@ test('accepts preserved literals, Japanese links, and explicit source anchors', 
   assert.equal(result.ok, true);
 });
 
+test('accepts translated prompts while preserving embedded literals', async () => {
+  const root = await makeRoot();
+  await put(root, 'README.md', [
+    '# Prompt',
+    '',
+    '```text',
+    'Explore https://example.com/ with `tests/seed.spec.ts` and write the result to',
+    'docs/results/report.md. Keep the "Homepage title", [REDACTED], and API values.',
+    '```',
+    '',
+  ].join('\n'));
+  await put(root, 'README.ja.md', [
+    '# プロンプト',
+    '',
+    '```prompt',
+    'https://example.com/ を `tests/seed.spec.ts` で確認し、結果を',
+    'docs/results/report.md に書き込んでください。"Homepage title"、[REDACTED]、API は保持してください。',
+    '```',
+    '',
+  ].join('\n'));
+  await stampTranslation(root, 'README.md');
+
+  const result = await checkTranslations(root);
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.ok, true);
+});
+
+test('rejects changes to protected prompt literals', async () => {
+  const root = await makeRoot();
+  await put(root, 'README.md', '```text\nWrite docs/results/report.md with `PASS`.\n```\n');
+  await put(root, 'README.ja.md', '```prompt\ndocs/results/summary.md に `FAIL` を書き込んでください。\n```\n');
+  await stampTranslation(root, 'README.md');
+
+  const result = await checkTranslations(root);
+  assert.equal(result.ok, false);
+  assert.match(result.errors.join('\n'), /prompt inline code changed/);
+  assert.match(result.errors.join('\n'), /prompt file path changed/);
+});
+
 test('detects changed placeholders, English links, and orphan translations', async () => {
   const root = await makeRoot();
   await put(root, 'README.md', '[Guide](docs/guide.md) {{VALUE}}\n');

@@ -25,8 +25,8 @@ derived document that can be regenerated whenever the English source changes.
 Preserve these items exactly, including spelling and case:
 
 - YAML frontmatter already present in the English source.
-- Fenced code blocks, including their info strings, comments, Mermaid source, and
-  `text` examples.
+- Fenced code blocks other than translated `prompt` blocks, including their info
+  strings, comments, Mermaid source, and recorded `text` examples.
 - Inline code spans.
 - URLs and email addresses.
 - File-system paths, command names, command options, package names, identifiers,
@@ -43,6 +43,19 @@ Preserve these items exactly, including spelling and case:
 
 Keep Markdown semantics intact: heading levels, list numbering, task states,
 tables, emphasis, blockquotes, and link/image distinction must not change.
+
+## Copyable Prompts
+
+Translate the natural-language instructions in copyable agent prompts. The
+English source uses a `text` fence; use a `prompt` fence for its Japanese
+translation so that the checker can distinguish it from protected commands,
+code, and recorded output.
+
+Within a `prompt` fence, preserve inline code, URLs, file-system paths, template
+placeholders, contract tokens, quoted literal names, and uppercase identifiers.
+Translate only the surrounding natural language. Do not use `prompt` for shell
+commands, source code, templates, expected output, observed evidence, or other
+content that must remain byte-for-byte identical to the English source.
 
 ## Reports And Test Procedures
 
@@ -111,7 +124,8 @@ canonical document changes.
 - Read the Japanese document independently for fluency and completeness.
 - Compare every heading, paragraph, list item, table row, and blockquote with the
   English source.
-- Confirm protected literals and recorded evidence remain exact.
+- Confirm protected literals and recorded evidence remain exact, including
+  literals embedded in translated `prompt` blocks.
 - Confirm Japanese Markdown links target available Japanese siblings and all
   fragments still resolve.
 - Run the per-file checker before moving on, then run the full checker after a

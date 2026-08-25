@@ -57,15 +57,16 @@ pnpm run pw:install-skills
 
 両方の Markdown ファイルをコンテキストとしてエージェントに渡します。次のリクエストはリポジトリルートからそのまま使用できます。
 
-```text
-Use the Playwright CLI Agent Skill to execute the procedure in
-docs/scenarios/automate-manual-testing/templates/work-instructions.md.
+```prompt
+Playwright CLI Agent Skill を使用して、次のファイルに記載された手順を実行してください。
+docs/scenarios/automate-manual-testing/templates/work-instructions.md。
 
-Use docs/scenarios/automate-manual-testing/templates/work-report.md as an immutable
-template and write the filled result to
-docs/scenarios/automate-manual-testing/sample-work-report.md. Base every result on
-observed Playwright CLI evidence, preserve real failures or blockers, fill every
-placeholder, and close the named browser session when finished.
+docs/scenarios/automate-manual-testing/templates/work-report.md を変更不可のテンプレートとして
+使用し、入力済みの結果を
+docs/scenarios/automate-manual-testing/sample-work-report.md に書き込んでください。すべての結果は
+観測した Playwright CLI の証跡に基づいて記録し、実際の失敗やブロッカーをそのまま残して、
+すべてのプレースホルダーを埋めてください。完了したら名前付きブラウザーセッションを閉じて
+ください。
 ```
 
 エージェントは observe-decide-act-report ループに従う必要があります。現在のアクセシビリティスナップショットを調べ、ユーザー向けのロケーターを選択し、1 つの操作を実行して、結果の状態を確認し、レポートには簡潔な証跡だけを残します。一時的な要素参照は、ナビゲーションまたはページ状態の実質的な変更後に再利用してはいけません。

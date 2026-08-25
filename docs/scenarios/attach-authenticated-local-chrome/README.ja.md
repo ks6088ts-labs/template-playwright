@@ -154,17 +154,16 @@ Skill 自体がブラウザーへのアクセスを許可するわけではあ�
 同じリクエスト内で、Skill を明示的に使用し、安全上の制約を示すようエージェントに依頼します。
 例を次に示します。
 
-```text
-Use the Playwright CLI Agent Skills to attach to the existing Google Chrome
-session with the name `calendar-local`. Open today's day view in Google
-Calendar in a new tab and inspect the schedule without making any changes.
+```prompt
+Playwright CLI Agent Skills を使用し、既存の Google Chrome セッションに
+`calendar-local` という名前でアタッチしてください。Google Calendar の今日の日ビューを
+新しいタブで開き、変更を加えずに予定を確認してください。
 
-Before including event titles, dates, times, calendar names, accounts,
-attendees, locations, descriptions, or URLs in your response, replace them with
-fictional values or `[REDACTED]`. Do not display or save cookies or storage
-state, do not close any existing tabs, and detach without closing Chrome when
-finished. If login, 2FA, CAPTCHA, or Chrome connection permission is required,
-pause so that I can handle it in the browser.
+回答にイベントのタイトル、日付、時刻、カレンダー名、アカウント、参加者、場所、説明、
+または URL を含める前に、架空の値または `[REDACTED]` に置き換えてください。Cookie や
+ストレージ状態を表示または保存せず、既存のタブを閉じないでください。完了したら Chrome を
+閉じずにデタッチしてください。ログイン、2FA、CAPTCHA、または Chrome への接続許可が
+必要な場合は、ブラウザーで私が対応できるように一時停止してください。
 ```
 
 適切に動作するエージェントは、Skill を手順のガイダンスとして使用し、バージョン固有の詳細が

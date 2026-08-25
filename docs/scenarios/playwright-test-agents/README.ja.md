@@ -172,12 +172,13 @@ VS Code Chat で次のように操作します。
 3. そのファイルが prompt context に表示されていることを確認します。
 4. 次のプロンプトを送信します。
 
-```text
-Explore https://playwright.dev/ and create a test plan for its basic user-facing
-operations. Cover the homepage, primary navigation, search, color theme,
-documentation navigation, and footer. Use tests/seed.spec.ts as the seed test.
-Keep every scenario independent, use observable outcomes, and save the plan to
-specs/playwright-website-basic-operations.plan.md.
+```prompt
+https://playwright.dev/ を探索し、基本的なユーザー向け操作のテスト計画を作成してください。
+ホームページ、プライマリナビゲーション、検索、カラーテーマ、ドキュメントのナビゲーション、
+フッターを対象にしてください。
+tests/seed.spec.ts をシードテストとして使用します。各シナリオを
+独立させ、観測可能な結果を使用し、計画を次のファイルに保存してください。
+specs/playwright-website-basic-operations.plan.md。
 ```
 
 planner は page を初期化し、実際のサイトを探索して、Markdown の計画を保存します。ブラウザーの
@@ -209,11 +210,12 @@ Markdown ファイルが存在するという理由だけで続行しないで�
    file context として追加します。
 3. 次のプロンプトを送信します。
 
-```text
-Generate only scenario 1.1, "Homepage loads with hero content", from
-specs/playwright-website-basic-operations.plan.md. Use tests/seed.spec.ts as the
-seed. Verify every step against the live page and write the test to
-tests/homepage/hero-content.spec.ts. Do not generate the other scenarios.
+```prompt
+specs/playwright-website-basic-operations.plan.md から、シナリオ 1.1
+"Homepage loads with hero content" だけを生成してください。
+tests/seed.spec.ts をシードとして
+使用します。実際のページですべての手順を検証し、テストを
+tests/homepage/hero-content.spec.ts に書き込んでください。他のシナリオは生成しないでください。
 ```
 
 generator はテストを作成する前に、計画された操作を実際のページに対して実行します。agent 定義では、
@@ -288,11 +290,11 @@ VS Code Chat で次のように操作します。
 2. 失敗している `tests/homepage/hero-content.spec.ts` を file context として追加します。
 3. 次のプロンプトを送信します。
 
-```text
-Run and heal the failing test in tests/homepage/hero-content.spec.ts. Diagnose
-the failure against the current https://playwright.dev/ page, make the smallest
-robust correction, and rerun the repaired test. Do not change unrelated tests or
-weaken the scenario's expected behavior.
+```prompt
+tests/homepage/hero-content.spec.ts の失敗しているテストを実行して修復してください。現在の
+https://playwright.dev/ ページに対して失敗を診断し、最小限で堅牢な修正を加えて、修復した
+テストを再実行してください。関係のないテストを変更したり、シナリオの期待動作を弱めたり
+しないでください。
 ```
 
 healer は失敗を再現して現在の UI を調査し、実際の `Get started` link に対する user-facing

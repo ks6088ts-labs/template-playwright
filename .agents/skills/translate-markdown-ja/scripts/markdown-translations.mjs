@@ -232,6 +232,11 @@ function fencedBlocks(content) {
   return content.match(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[ \t]*$/gm) ?? [];
 }
 
+function fencedBlockParts(block) {
+  const match = block.match(/^(`{3,}|~{3,})([^\n]*)\n([\s\S]*?)^\1[ \t]*$/m);
+  return match ? { marker: match[1], info: match[2].trim(), body: match[3] } : null;
+}
+
 function withoutFencedBlocks(content) {
   return content.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[ \t]*$/gm, (block) => (
     '\n'.repeat(block.split('\n').length - 1)
@@ -257,6 +262,24 @@ function externalUrls(content) {
     .map((url) => url.replace(/[.,;:!?、。，．！？；：]+$/u, ''));
 }
 
+function promptFilePaths(content) {
+  return [...content.matchAll(/(?:^|[\s("'])((?!https?:\/\/)(?:\.{1,2}\/)?[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)+)/gm)]
+    .map((match) => match[1].replace(/[.,;:!?]+$/, ''));
+}
+
+function promptContractTokens(content) {
+  return content.match(/\[[A-Z][A-Z0-9 _-]*\]|\b(?:PASS|FAIL|BLOCKED|[A-Z]{2,}-\d+)\b/g) ?? [];
+}
+
+function promptUppercaseIdentifiers(content) {
+  return (content.match(/\b(?=[A-Z0-9]*[A-Z])[A-Z0-9]{2,}(?:s)?\b/g) ?? [])
+    .map((identifier) => identifier.replace(/s$/, ''));
+}
+
+function promptQuotedLiterals(content) {
+  return content.match(/"[^"\n]+"/g) ?? [];
+}
+
 function countItems(items) {
   const counts = new Map();
   for (const item of items) {
@@ -273,6 +296,49 @@ function compareExact(label, sourceItems, translationItems, errors, translationP
     if ((sourceCounts.get(item) ?? 0) !== (translationCounts.get(item) ?? 0)) {
       errors.push(`${translationPath}: ${label} changed: ${JSON.stringify(item)}`);
     }
+  }
+}
+
+function compareFencedBlocks(sourceContent, translationContent, errors, translationPath) {
+  const sourceBlocks = fencedBlocks(sourceContent);
+  const translationBlocks = fencedBlocks(translationContent);
+
+  if (sourceBlocks.length !== translationBlocks.length) {
+    errors.push(`${translationPath}: fenced code block count changed: ${sourceBlocks.length} -> ${translationBlocks.length}`);
+    return;
+  }
+
+  for (let index = 0; index < sourceBlocks.length; index += 1) {
+    if (sourceBlocks[index] === translationBlocks[index]) {
+      continue;
+    }
+
+    const source = fencedBlockParts(sourceBlocks[index]);
+    const translation = fencedBlockParts(translationBlocks[index]);
+    const isTranslatedPrompt = source?.info === 'text'
+      && translation?.info === 'prompt'
+      && source.marker === translation.marker;
+
+    if (!isTranslatedPrompt) {
+      compareExact(
+        'fenced code block',
+        [sourceBlocks[index]],
+        [translationBlocks[index]],
+        errors,
+        translationPath,
+      );
+      continue;
+    }
+
+    if (!/[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u.test(translation.body)) {
+      errors.push(`${translationPath}: translated prompt does not contain Japanese text`);
+    }
+    compareExact('prompt inline code', inlineCode(source.body), inlineCode(translation.body), errors, translationPath);
+    compareExact('prompt external URL', externalUrls(source.body), externalUrls(translation.body), errors, translationPath);
+    compareExact('prompt file path', promptFilePaths(source.body), promptFilePaths(translation.body), errors, translationPath);
+    compareExact('prompt contract token', promptContractTokens(source.body), promptContractTokens(translation.body), errors, translationPath);
+    compareExact('prompt uppercase identifier', promptUppercaseIdentifiers(source.body), promptUppercaseIdentifiers(translation.body), errors, translationPath);
+    compareExact('prompt quoted literal', promptQuotedLiterals(source.body), promptQuotedLiterals(translation.body), errors, translationPath);
   }
 }
 
@@ -423,7 +489,7 @@ async function validatePair(root, status, errors) {
   if (frontmatter(sourceContent) !== frontmatter(translationContent)) {
     errors.push(`${status.translationPath}: YAML frontmatter differs from the English source`);
   }
-  compareExact('fenced code block', fencedBlocks(sourceContent), fencedBlocks(translationContent), errors, status.translationPath);
+  compareFencedBlocks(sourceContent, translationContent, errors, status.translationPath);
   compareExact('inline code', inlineCode(sourceContent), inlineCode(translationContent), errors, status.translationPath);
   compareExact('placeholder', placeholders(sourceContent), placeholders(translationContent), errors, status.translationPath);
   compareExact('external URL', externalUrls(sourceContent), externalUrls(translationContent), errors, status.translationPath);

@@ -75,17 +75,17 @@ pnpm run pw:install-skills
 指示書ファイルをエージェントにコンテキストとして渡します。次のリクエストはリポジトリ
 ルートからそのまま使用できます:
 
-```text
-Use the Playwright CLI Agent Skill to follow the procedure in
-docs/scenarios/create-screenshot-guide/templates/guide-instructions.md.
+```prompt
+Playwright CLI Agent Skill を使用して、次のファイルに記載された手順に従ってください。
+docs/scenarios/create-screenshot-guide/templates/guide-instructions.md。
 
-Capture one screenshot per step into
-docs/scenarios/create-screenshot-guide/sample-guide/images/ and write the
-beginner guide to
-docs/scenarios/create-screenshot-guide/sample-guide/petstore-swagger-ui-guide.md.
-Use the named session create-screenshot-guide, base every caption on observed
-evidence, treat the response body as dynamic, then create the Japanese sibling
-with the translate-markdown-ja skill and close the browser session when finished.
+各手順につき 1 枚のスクリーンショットを
+docs/scenarios/create-screenshot-guide/sample-guide/images/ に保存し、初心者向けガイドを
+docs/scenarios/create-screenshot-guide/sample-guide/petstore-swagger-ui-guide.md に書き込んでください。
+create-screenshot-guide という名前付きセッションを使用し、各キャプションは
+観測した証跡に基づいて記述し、レスポンス本文を動的な内容として扱ってください。その後、
+translate-markdown-ja Skill を使用して日本語版ファイルを作成し、完了したらブラウザー
+セッションを閉じてください。
 ```
 
 エージェントは、観察・判断・実行のループに従う必要があります。現在のアクセシビリティ
